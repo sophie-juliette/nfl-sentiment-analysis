@@ -1,0 +1,1659 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Datenaufbereitung &#8212; NFL Stimmungsbild</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Datenanalyse" href="gc_graphics.html" />
+    <link rel="prev" title="Zukünftige Daten" href="gc_future.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">NFL Stimmungsbild</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    Einleitung
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Proof of Concept
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_database.html">
+   Datenbank
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_scrapping.html">
+   Webscrapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_cloud.html">
+   Kommentare &amp; Sentiment
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Cloud
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_introduction.html">
+   Virtuelle Maschine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_limits.html">
+   Adaption PoC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_future.html">
+   Zukünftige Daten
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Daten
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Aufbereitung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_graphics.html">
+   Analyse
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Abschluss
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="outlook.html">
+   Ausblick und Fazit
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ---------
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="sentimentfunc.html">
+   sentiment.py-File
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Literatur.html">
+   Literaturverzeichnis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Figures_Tables.html">
+   Abbildungsverzeichnis
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/sophie-juliette/nfl-sentiment-analysis/master?urlpath=tree/gc_analysis.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/sophie-juliette/nfl-sentiment-analysis"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/gc_analysis.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hole-daten-von-mongodb">
+   Hole Daten von MongoDB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorbereitung-entitaten">
+   Vorbereitung Entitäten
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#berucksichtigung-von-rechtschreibungsfehler">
+     Berücksichtigung von Rechtschreibungsfehler
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erstellungen-eines-synonym-worterbuchs">
+     Erstellungen eines Synonym-Wörterbuchs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anwendung-des-synonym-worterbuchs">
+     Anwendung des Synonym-Wörterbuchs
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anreichung-des-dataframes">
+   Anreichung des DataFrames
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aggregation">
+   Aggregation
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Datenaufbereitung</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hole-daten-von-mongodb">
+   Hole Daten von MongoDB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorbereitung-entitaten">
+   Vorbereitung Entitäten
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#berucksichtigung-von-rechtschreibungsfehler">
+     Berücksichtigung von Rechtschreibungsfehler
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erstellungen-eines-synonym-worterbuchs">
+     Erstellungen eines Synonym-Wörterbuchs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anwendung-des-synonym-worterbuchs">
+     Anwendung des Synonym-Wörterbuchs
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anreichung-des-dataframes">
+   Anreichung des DataFrames
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aggregation">
+   Aggregation
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="datenaufbereitung">
+<span id="gc-analysis"></span><h1>Datenaufbereitung<a class="headerlink" href="#datenaufbereitung" title="Permalink to this headline">#</a></h1>
+<p>In diesem Notebook werden die Daten aus Webscrapping und der Sentimentanalyse für die Analyse vorbereitetet und angereichert.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span>
+<span class="kn">from</span> <span class="nn">difflib</span> <span class="kn">import</span> <span class="n">SequenceMatcher</span>
+
+<span class="c1">#import plotly.express as px</span>
+<span class="c1">#import plotly.figure_factory as ff</span>
+<span class="c1">#from plotly.offline import init_notebook_mode</span>
+<span class="c1">#init_notebook_mode() # To show plotly plots when notebook is exported to html</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mongodb_pass</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;API_Data.json&#39;</span><span class="p">))[</span><span class="s1">&#39;mongoDB_pass&#39;</span><span class="p">]</span> <span class="c1"># password mongodb user</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">mongodb_pass</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">gc_nfl</span>
+<span class="n">mycoll</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">gc_games</span>
+</pre></div>
+</div>
+</div>
+</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Da die Youtube-Kommentare sehr lang sein können, wird die maximale Zeichenlänge der Zellen im Dataframe erhöht.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="hole-daten-von-mongodb">
+<h2>Hole Daten von MongoDB<a class="headerlink" href="#hole-daten-von-mongodb" title="Permalink to this headline">#</a></h2>
+<p>Dafür werden zu nächste die Daten aus mongodb abgerufen und in einen Dataframe umgewandelt. Die explorative Datenanalyse wird am Beispiel der Season 2021/2022 gezeigt, da diese Season bereits abgeschlossen ist.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;$match&#39;</span><span class="p">:{</span><span class="s1">&#39;year&#39;</span><span class="p">:</span><span class="s1">&#39;2021&#39;</span><span class="p">}},</span>
+        <span class="p">{</span><span class="s1">&#39;$project&#39;</span><span class="p">:{</span>
+                <span class="s1">&#39;_id&#39;</span><span class="p">:</span><span class="mi">0</span>
+        <span class="p">}}</span>
+        <span class="p">]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">mycoll</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vorbereitung-entitaten">
+<h2>Vorbereitung Entitäten<a class="headerlink" href="#vorbereitung-entitaten" title="Permalink to this headline">#</a></h2>
+<p>Für den Erkenntnisgewinn sind die Enitäten der Kommentare interessant, welche Mannschaftsnamen enthalten. Die Mannschaftsnamen der NFL-Teams bestehen aus zwei Bestandteilen: einen Namen des Heimatsort (z.B. Tampa Bay) und einem Teamnamen (z.B. Buccaneers). Ziel der Data Preperation ist es so viele Enitäten, wie möglich als Mannschaftsnamen zu identifizieren. Dafür müssen Synonyme wie z.B. Spitznamen oder nur der Heimatort als Mannschaftsnamen und Rechtschreibfehler erkannt werden.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team1</th>
+      <th>score1</th>
+      <th>team2</th>
+      <th>score2</th>
+      <th>year</th>
+      <th>week</th>
+      <th>videoID</th>
+      <th>comment</th>
+      <th>entity</th>
+      <th>salience</th>
+      <th>score</th>
+      <th>magnitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>players</td>
+      <td>0.800480</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>NFL</td>
+      <td>0.136442</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>Tampa Bay Buccaneers</td>
+      <td>0.063078</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>#🐰💀 vs #🤠🦆</td>
+      <td>#🐰</td>
+      <td>1.000000</td>
+      <td>0.1</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>OMG!! I really thought we were gonna beat the goat!! Such an amazing game!!</td>
+      <td>game</td>
+      <td>0.528493</td>
+      <td>0.9</td>
+      <td>0.9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="berucksichtigung-von-rechtschreibungsfehler">
+<h3>Berücksichtigung von Rechtschreibungsfehler<a class="headerlink" href="#berucksichtigung-von-rechtschreibungsfehler" title="Permalink to this headline">#</a></h3>
+<p>Insofern die Entitäten mit Rechtschreibfehler von Google NLP erkannt wurden, sollen diese mit Hilfe des SequenceMatchers und Casefold zu einem “team_by_entity”-Wert zugeordnet werden.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">casefold</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Der SequenceMatcher berechent einen Ähnlichkeitswert von zwei Strings. Für das Projekt wird der Grenzwert auf 0.8 festgelegt. Mit der Funktion <code class="docutils literal notranslate"><span class="pre">match_sequence()</span></code> können die Teamnamen mit den Enität aus den Kommentaren abgeglichen werden. Liegt Ähnlichkeit vor, werden die Teamnamen der Enitäten korrigiert.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myStr1</span> <span class="o">=</span> <span class="s2">&quot;Titans&quot;</span>
+<span class="n">myStr2</span> <span class="o">=</span> <span class="s2">&quot;tittans&quot;</span>
+
+<span class="n">SequenceMatcher</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">myStr1</span><span class="o">.</span><span class="n">casefold</span><span class="p">(),</span><span class="n">b</span><span class="o">=</span><span class="n">myStr2</span><span class="o">.</span><span class="n">casefold</span><span class="p">())</span><span class="o">.</span><span class="n">ratio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9230769230769231
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">match_sequence</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Input: string1 -&gt; Entität</span>
+<span class="sd">           string2 -&gt; Textstelle im Kommentar</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">string2</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">SequenceMatcher</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="n">string1</span><span class="o">.</span><span class="n">casefold</span><span class="p">(),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">string2</span><span class="o">.</span><span class="n">casefold</span><span class="p">())</span><span class="o">.</span><span class="n">ratio</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">string1</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">df0</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">match_sequence</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;team1&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">df0</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">match_sequence</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;team2&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mit der Anwendung des SequenceMatcher konnten 965 weitere Enitäten zugeordnet werden.</p>
+</section>
+<section id="erstellungen-eines-synonym-worterbuchs">
+<h3>Erstellungen eines Synonym-Wörterbuchs<a class="headerlink" href="#erstellungen-eines-synonym-worterbuchs" title="Permalink to this headline">#</a></h3>
+<p>Die Datenbasis des Synonym-Wörterbuchs ist eine Tabelle aus Github, welche die vollständigen Mannschaftsnamen enthält.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://gist.githubusercontent.com/cnizzardini/13d0a072adb35a0d5817/raw/f315c97c7677845668a9c26e9093d0d550533b00/nfl_teams.csv&#39;</span><span class="p">)</span>
+<span class="n">nfl_teams</span><span class="p">[</span><span class="s1">&#39;Name_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">nfl_teams</span><span class="p">[</span><span class="s1">&#39;Name_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nfl_teams</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Abbreviation</th>
+      <th>Conference</th>
+      <th>Division</th>
+      <th>Name_1</th>
+      <th>Name_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Arizona Cardinals</td>
+      <td>ARI</td>
+      <td>NFC</td>
+      <td>West</td>
+      <td>Cardinals</td>
+      <td>Arizona</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Atlanta Falcons</td>
+      <td>ATL</td>
+      <td>NFC</td>
+      <td>South</td>
+      <td>Falcons</td>
+      <td>Atlanta</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Baltimore Ravens</td>
+      <td>BAL</td>
+      <td>AFC</td>
+      <td>North</td>
+      <td>Ravens</td>
+      <td>Baltimore</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Buffalo Bills</td>
+      <td>BUF</td>
+      <td>AFC</td>
+      <td>East</td>
+      <td>Bills</td>
+      <td>Buffalo</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Carolina Panthers</td>
+      <td>CAR</td>
+      <td>NFC</td>
+      <td>South</td>
+      <td>Panthers</td>
+      <td>Carolina</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Mit den Spalten ‘Name_1’ und ‘Name_2’ wird der vollständige Mannschaftsname in den Teamname und den Heimatort getrennt, um die ersten Synonyme zu erhalten. Der Teamname dient in den nachfolgenden Betrachtungen als zentrale Entität (“team_by_entity”) für den Mannschaftsnamen. Alle anderen Synonyme werden dem Teamnamen zugeordnetet.</p>
+<p>Nachfolgend wird die Tabelle mit den gebildeten Entitäten verschlankt. Die Werte für “team_by_entity” werden mit dem zugehörigen Synonymen kombiniert und unterhalb der bestehenden Tabelle angefügt. Schließlich werden die Spaltennamen umbenannt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_name2</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="p">[[</span><span class="s1">&#39;Name_1&#39;</span><span class="p">,</span><span class="s1">&#39;Name_2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_name1</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="p">[[</span><span class="s1">&#39;Name_1&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_name1</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_name1</span><span class="p">[</span><span class="s1">&#39;Name_1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_name2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Name_2&#39;</span><span class="p">:</span><span class="s1">&#39;Name&#39;</span><span class="p">}),</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+<span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_name1</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+<span class="n">nfl_teams</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span><span class="s1">&#39;Abbreviation&#39;</span><span class="p">,</span> <span class="s1">&#39;Conference&#39;</span><span class="p">,</span><span class="s1">&#39;Division&#39;</span><span class="p">,</span><span class="s1">&#39;Name_2&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">nfl_teams</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span><span class="s1">&#39;Name_1&#39;</span><span class="p">:</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vikings</span> <span class="o">=</span> <span class="n">nfl_teams</span><span class="p">[</span><span class="n">nfl_teams</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Packers&quot;</span><span class="p">]</span> 
+<span class="n">vikings</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>entity</th>
+      <th>team_by_entity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>Green Bay Packers</td>
+      <td>Packers</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Green Bay</td>
+      <td>Packers</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Packers</td>
+      <td>Packers</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Für die Mannschaft “Packers” ist “Cheeseheads” ein sehr gängiger Spitzname. Solche Entitäten sollen ebenfalls berücksichtigt werden. Mit der nachfolgenden Funktion können derartige Synonyme hinzugeügt werden. Exemplarisch wird dies für drei Teams durchgeführt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">append_pairs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">team_by_entity</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes: pandas dataframe, entity and team_by_entity, trigger for multiple or single values</span>
+<span class="sd">    if single=False the input for entity and team_by_entity has to be a list.</span>
+<span class="sd">    returns a pandas dataframe object that includes old and new data.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
+        <span class="n">new_pair</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;entity&#39;</span><span class="p">:[</span><span class="n">entity</span><span class="p">],</span>
+                    <span class="s1">&#39;team_by_entity&#39;</span><span class="p">:[</span><span class="n">team_by_entity</span><span class="p">]</span>
+                <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_pair</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;entity&#39;</span><span class="p">:</span><span class="n">entity</span><span class="p">,</span>
+                    <span class="s1">&#39;team_by_entity&#39;</span><span class="p">:</span><span class="n">team_by_entity</span>
+                <span class="p">}</span>   
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">new_pair</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">append_pairs</span><span class="p">(</span><span class="n">nfl_teams</span><span class="p">,</span> <span class="s2">&quot;Cheeseheads&quot;</span><span class="p">,</span> <span class="s2">&quot;Packers&quot;</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">append_pairs</span><span class="p">(</span><span class="n">nfl_teams</span><span class="p">,</span> <span class="s2">&quot;Redskins&quot;</span><span class="p">,</span> <span class="s2">&quot;Commanders&quot;</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">nfl_teams</span> <span class="o">=</span> <span class="n">append_pairs</span><span class="p">(</span><span class="n">nfl_teams</span><span class="p">,</span> <span class="s2">&quot;Bucs&quot;</span><span class="p">,</span> <span class="s2">&quot;Buccaneers&quot;</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Es ist denkbar, die Synonyme noch deutlich weiter zu ergänzen, z.B. mit den Namen der Quaterbacks. Dem Team “Buccaneers” könnte so weitere 1700 Kommentare mit der Entität “Brady” zugeordnet werden.</p>
+</section>
+<section id="anwendung-des-synonym-worterbuchs">
+<h3>Anwendung des Synonym-Wörterbuchs<a class="headerlink" href="#anwendung-des-synonym-worterbuchs" title="Permalink to this headline">#</a></h3>
+<p>Das Synonym-Wörterbuch wird im folgenden auf den gesamten Dataframe angewendet.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">casefold</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">nfl_teams</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">casefold</span><span class="p">(),</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([None, &#39;Buccaneers&#39;, &#39;Cowboys&#39;, &#39;Patriots&#39;, &#39;Jets&#39;, &#39;Rams&#39;,
+       &#39;Broncos&#39;, &#39;49ers&#39;, &#39;Eagles&#39;, &#39;Chiefs&#39;, &#39;Saints&#39;, &#39;Falcons&#39;,
+       &#39;Steelers&#39;, &#39;Ravens&#39;, &#39;Browns&#39;, &#39;Dolphins&#39;, &#39;Texans&#39;, &#39;Lions&#39;,
+       &#39;Commanders&#39;, &#39;Jaguars&#39;, &#39;Raiders&#39;, &#39;Giants&#39;, &#39;Bills&#39;, &#39;Packers&#39;,
+       &#39;Titans&#39;, &#39;Colts&#39;, &#39;Vikings&#39;, &#39;Panthers&#39;, &#39;Cardinals&#39;, &#39;Bears&#39;,
+       &#39;Chargers&#39;, &#39;Bengals&#39;, &#39;Seahawks&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>330066
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die Dokumente, welche keiner “team_by_enity” zugeordnet werden konnten, werden entfernt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team1</th>
+      <th>score1</th>
+      <th>team2</th>
+      <th>score2</th>
+      <th>year</th>
+      <th>week</th>
+      <th>videoID</th>
+      <th>comment</th>
+      <th>entity</th>
+      <th>salience</th>
+      <th>score</th>
+      <th>magnitude</th>
+      <th>team_by_entity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>tampa bay buccaneers</td>
+      <td>0.063078</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Buccaneers</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>Though Dallas has nothing to be ashamed of, this game was stripped from them. That was definitely a push-off by Godwin. Outside of that, it was an awesome game to watch.</td>
+      <td>dallas</td>
+      <td>0.295658</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cowboys</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>I’m very lost Tom brad 50mil contract  best in the league barely get hurts. But go to Dallas 160mil for dak couldn’t clutch a last year game and get hurt a lot df🤔going on here the goat get paid less but a person who get hurt a lot get paid more with no rings🤨</td>
+      <td>dallas</td>
+      <td>0.021111</td>
+      <td>-0.1</td>
+      <td>0.1</td>
+      <td>Cowboys</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>Brady the "goat" barely very barely  beating the cowboys.... I'd even go as far as to say struggled to beat them, barely beat them.... the goat.... ok sure... 2 points... :/</td>
+      <td>cowboys</td>
+      <td>0.089547</td>
+      <td>0.1</td>
+      <td>0.1</td>
+      <td>Cowboys</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>Can someone tell me how to get the Patriots game and watch it on my phone thank you</td>
+      <td>patriots</td>
+      <td>0.073656</td>
+      <td>0.2</td>
+      <td>0.2</td>
+      <td>Patriots</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Ebenfalls werden die Dokumente entfernt, welche ein Teamnamen enthalten, welcher nicht für das betrachtete Spiel relevant ist und damit nicht die Stimmung der spielenden Mannschaften repräsentieren, z.B. ein Kommentar zu den Cowboys im Spiel der Packers gegen Buccaners.</p>
+</section>
+</section>
+<section id="anreichung-des-dataframes">
+<h2>Anreichung des DataFrames<a class="headerlink" href="#anreichung-des-dataframes" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team1&#39;</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team2&#39;</span><span class="p">]),</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">],</span> <span class="kc">None</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Im nächsten Schritt werden den Größen ‘Score’ und ‘Magnitude’ ein “Sentiment” zugeordnet. Dafür werden Schwellenwerte für negativ, neutral und positiv festgelegt.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>senitment</p></th>
+<th class="head"><p>score</p></th>
+<th class="head"><p>magnitude</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>positive</p></td>
+<td><p>&gt; 0.1</p></td>
+<td><p>&gt; 0.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>negative</p></td>
+<td><p>&gt; -0.1</p></td>
+<td><p>&gt;0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>neutral</p></td>
+<td><p>&lt;= abs(0.1)</p></td>
+<td><p>&lt;= 0.1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Um an dieser Stelle den “Floating-point error” zu umgehen, werden die Fließkommazahlen mit 10 multipliziert und in einen Integer umgewandelt, sodass sie ohne Fehler verglichen werden können.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> 
+<span class="n">series_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">series_mag</span> <span class="o">=</span> <span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;magnitude&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">series_score</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">series_mag</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;neutral&#39;</span><span class="p">,</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">series_score</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">series_mag</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;negative&#39;</span><span class="p">,</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">series_score</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">series_mag</span>  <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;positive&#39;</span><span class="p">,</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">df0</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team1</th>
+      <th>score1</th>
+      <th>team2</th>
+      <th>score2</th>
+      <th>year</th>
+      <th>week</th>
+      <th>videoID</th>
+      <th>comment</th>
+      <th>entity</th>
+      <th>salience</th>
+      <th>score</th>
+      <th>magnitude</th>
+      <th>team_by_entity</th>
+      <th>sentiment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>players</td>
+      <td>0.800480</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>neutral</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>nfl</td>
+      <td>0.136442</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>neutral</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>tampa bay buccaneers</td>
+      <td>0.063078</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Buccaneers</td>
+      <td>neutral</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Für die Analyse werden zwei weitere Spalten erzeugt. Die Spalte “win_for_entity” enthält die Attribute “win”, “draw” oder “defeat”, je nachdem ob die Entität aus der Zeile gewonnen oder verloren hat.
+Die Spalte “winner” enthält jeweils die Mannschaft, welche gewonnen hat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;win_for_entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;draw&#39;</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;winner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score1&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;score2&#39;</span><span class="p">],</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team1&#39;</span><span class="p">],</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team2&#39;</span><span class="p">])</span>
+<span class="n">df0</span><span class="p">[</span><span class="s1">&#39;win_for_entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;winner&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">df0</span><span class="p">[</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">],</span><span class="s1">&#39;win&#39;</span><span class="p">,</span><span class="s1">&#39;defeat&#39;</span><span class="p">)</span>
+<span class="n">df0</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team1</th>
+      <th>score1</th>
+      <th>team2</th>
+      <th>score2</th>
+      <th>year</th>
+      <th>week</th>
+      <th>videoID</th>
+      <th>comment</th>
+      <th>entity</th>
+      <th>salience</th>
+      <th>score</th>
+      <th>magnitude</th>
+      <th>team_by_entity</th>
+      <th>sentiment</th>
+      <th>win_for_entity</th>
+      <th>winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>players</td>
+      <td>0.800480</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>neutral</td>
+      <td>defeat</td>
+      <td>Buccaneers</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>nfl</td>
+      <td>0.136442</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>neutral</td>
+      <td>defeat</td>
+      <td>Buccaneers</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Buccaneers</td>
+      <td>31</td>
+      <td>Cowboys</td>
+      <td>29</td>
+      <td>2021</td>
+      <td>Week 1</td>
+      <td>HzkUcSd3Utc</td>
+      <td>They made all the bad NFL players sign as Tampa Bay Buccaneers sometimes they get heated</td>
+      <td>tampa bay buccaneers</td>
+      <td>0.063078</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Buccaneers</td>
+      <td>neutral</td>
+      <td>win</td>
+      <td>Buccaneers</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="aggregation">
+<h2>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this headline">#</a></h2>
+<p>Die bisherige Bearbeitung dient als Grundlage, um für die Analyse ein Tabelle mit Kennzahlen pro Mannschaft und Spiel zu bilden.</p>
+<p>Die aggregierte Analyse-Tabelle soll folgenden Aufbau haben:</p>
+<ul class="simple">
+<li><p>Mannschaft</p></li>
+<li><p>Spielwoche</p></li>
+<li><p>Ausgang: Sieg/Niederlage/Unentschieden</p></li>
+<li><p>Durchschnittlicher Sentiment Score</p></li>
+<li><p>Anzahl Kommentare mit positiven Sentiment</p></li>
+<li><p>Anzahl Kommentare mit negativen Sentiment</p></li>
+<li><p>Anzahl Kommentare mit neutralen Sentiment</p></li>
+</ul>
+<p>Zum Zählen der Sentimentwerte wurde einen Funktion geschrieben, um Fehler zu vermeiden falls eine Kategorie (positive, negative, neutral) nicht vorkommt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_sentiment</span><span class="p">(</span><span class="n">inp_series</span><span class="p">,</span> <span class="n">sentiment_value</span><span class="p">):</span> 
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">count</span> <span class="o">=</span> <span class="n">inp_series</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="n">sentiment_value</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span> 
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die Aggragtion erfolgt über die Spalten “team_by_entity” und “week” mit den Funktionen:</p>
+<ul class="simple">
+<li><p>first, zum Bestimmen des Ausgangs</p></li>
+<li><p>mean, zur Bildung des durchschnittlichen Sentiment Scores</p></li>
+<li><p>count_sentiment, zum Zählen der positiven, negativen und neutralen Kommentare</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span><span class="o">=</span> <span class="n">df0</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;team_by_entity&#39;</span><span class="p">,</span><span class="s1">&#39;week&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+                                   <span class="n">outcome</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;win_for_entity&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">),</span>
+                                   <span class="n">avg_score</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+                                   <span class="n">count_neg</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;sentiment&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_sentiment</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;negative&#39;</span><span class="p">)),</span>
+                                   <span class="n">count_pos</span>    <span class="o">=</span><span class="p">(</span><span class="s1">&#39;sentiment&#39;</span><span class="p">,</span>  <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_sentiment</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;positive&#39;</span><span class="p">)),</span>
+                                   <span class="n">count_neutral</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;sentiment&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_sentiment</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;neutral&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Abschließen wird die Spielwoche in einen numerischen Wert umgewandelt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;week&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">summary</span><span class="p">[</span><span class="s1">&#39;week&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;week&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>team_by_entity</th>
+      <th>week</th>
+      <th>outcome</th>
+      <th>avg_score</th>
+      <th>count_neg</th>
+      <th>count_pos</th>
+      <th>count_neutral</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>49ers</td>
+      <td>1</td>
+      <td>win</td>
+      <td>0.046951</td>
+      <td>29</td>
+      <td>47</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Broncos</td>
+      <td>1</td>
+      <td>win</td>
+      <td>0.232381</td>
+      <td>14</td>
+      <td>117</td>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>Browns</td>
+      <td>1</td>
+      <td>defeat</td>
+      <td>0.128121</td>
+      <td>125</td>
+      <td>359</td>
+      <td>386</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>Buccaneers</td>
+      <td>1</td>
+      <td>win</td>
+      <td>0.084448</td>
+      <td>87</td>
+      <td>178</td>
+      <td>281</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Cardinals</td>
+      <td>1</td>
+      <td>win</td>
+      <td>0.193962</td>
+      <td>20</td>
+      <td>119</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Bengals</td>
+      <td>18</td>
+      <td>defeat</td>
+      <td>0.017647</td>
+      <td>3</td>
+      <td>4</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>364</th>
+      <td>Panthers</td>
+      <td>18</td>
+      <td>defeat</td>
+      <td>0.325000</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bears</td>
+      <td>18</td>
+      <td>defeat</td>
+      <td>-0.125000</td>
+      <td>2</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>467</th>
+      <td>Seahawks</td>
+      <td>18</td>
+      <td>win</td>
+      <td>0.079167</td>
+      <td>1</td>
+      <td>7</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>Colts</td>
+      <td>18</td>
+      <td>defeat</td>
+      <td>-0.042105</td>
+      <td>7</td>
+      <td>7</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>543 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>Das Ergebniss wird in einer CSV-Datei gespeichert und im anschließenden Notebook zur Datenanalyse genutzt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;summary_2021.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="gc_future.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Zukünftige Daten</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="gc_graphics.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Datenanalyse</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Markus Armbrecht und Sophie Horn<br/>
+  
+    <div class="extra_footer">
+      <div> Projektarbeit zu Web- & Social Media Analytics<br> im Wintersemester 2022/23<br> <br> <a target="_blank" href="https://icons8.com/icon/xZc9kxSKqmeM/american-football-spieler">American Football-Spieler</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br> <a href="https://github.com/TheArmbreaker" target="_blank"><img src="https://img.shields.io/badge/Github-Markus%20Armbrecht-orange" alt="Github Markus Armbrecht"></a> <a href="https://github.com/sophie-juliette" target="_blank"><img src="https://img.shields.io/badge/Github-Sophie%20Horn-brightgreen" alt="Github Sophie Horn"></a> </div>
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

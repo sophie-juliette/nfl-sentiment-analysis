@@ -1,0 +1,141 @@
+import json
+import os
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from googleapiclient.discovery import build
+from google.cloud import language_v1
+
+def get_entity_sentiment(myText):
+    client = language_v1.LanguageServiceClient()
+    doc = language_v1.Document(content=myText,type_=language_v1.types.Document.Type.PLAIN_TEXT)
+    response = client.analyze_entity_sentiment(request={'document':doc, 'encoding_type':language_v1.EncodingType.UTF8})
+    myList = list()
+    for ent in response.entities:
+        myDict = dict()
+        sent = ent.sentiment 
+        myDict['entity'] = ent.name
+        myDict['salience'] = ent.salience
+        myDict['score'] = sent.score
+        myDict['magnitude'] = sent.magnitude
+        myList.append(myDict)
+    return myList
+
+def get_videoID_by_title(video_title):
+    '''
+    takes: video_title as string
+    returns: videoId as string
+    describtion:
+        builds a connection to Youtube Data API and executes a search method to list results.
+        searches for channelId from NFL-Youtube Channel, for videos only
+        returns videoID for most relevant search result
+    '''
+    try:
+        youtube = build('youtube', 'v3', 
+                    developerKey=api_key)
+        response = youtube.search().list(
+        	        part='snippet',
+                	q=video_title,
+                	channelId='UCDVYQ4Zhbm3S2dlz7P1GBDg', # NFL Channel ID
+                	type='video',
+                	order='relevance', # Default Value = relevance
+                	maxResults=1
+                	).execute()
+        return response['items'][-1]['id']['videoId']
+    except:
+        return "NoQuota"
+
+def get_comments(vidId):
+    '''
+    takes: youtube video id as string, global api_key as string
+    returns: list of toplevel-comments under video (no replies)
+    describtion:
+        builds a connection to Youtube Data API and executs commentsThreads().list() methods
+        iterates over response from api request and stores displayed text as string in an list
+        breaks if no NextPageToken is provided. Thus end of comments is reached.
+        breaks if counter < threshold-value prevent Youtube out of quota error
+        returns list with comments
+    '''
+    # list for several pages
+    comments = list()
+    counter = 4
+
+    # get youtube access
+    youtube = build('youtube', 'v3', 
+                developerKey=api_key)
+    print('yt loaded')
+    # get response
+    response = youtube.commentThreads().list(
+	            part='snippet',
+	            videoId=vidId,
+                textFormat='plainText'
+	            ).execute()
+
+    while True:
+        for item in response['items']:
+            # get comment as string, attached to list.
+            # return item['snippet']['topLevelComment']['snippet']['textDisplay']
+            comments.append(item['snippet']['topLevelComment']['snippet']['textDisplay'])
+        counter -=1
+        if counter < 1:
+             break
+        if 'nextPageToken' in response:
+            response = youtube.commentThreads().list(
+	                    part='snippet',
+                        pageToken=response['nextPageToken'],
+	                    videoId=vidId
+	                    ).execute()
+        else:
+            break
+    print('comments returned')
+    return comments
+
+
+api_key = json.load(open('API_Data.json'))['ytDataAPI'] # key for Youtube Data API
+mongodb_pass = json.load(open('API_Data.json'))['mongoDB_pass'] # password mongodb user
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="green-reporter-369217-84ed773093b1.json" # expose google service account for sentiment analysis
+
+client = MongoClient(mongodb_pass)
+db = client.gc_nfl
+mycoll = db.gc_games
+# db = client.nfl_data
+# mycoll = db.games
+
+myList = mycoll.find({'videoID':{'$exists':False}})[0:2]
+for doc in myList:
+    mongo_obj_id = doc['_id'] # ObjectID von mongoDB speichern
+    myTitle = doc['team1']+' '+doc['team2']+' '+doc['week']+' Highlights | NFL 2021'
+    vid_id = get_videoID_by_title(myTitle)
+    if vid_id == "NoQuota":
+        print(vid_id)
+        break
+    print(myTitle)
+    comment_count = 0
+    for comment in get_comments(vid_id):
+        comment_count += 1
+        myDict = dict()
+        # Retrieve old information
+        myDict = doc
+        myDict['videoID'] = vid_id
+
+        # Add new information / generate one doc per entity
+        myDict['comment'] = comment
+
+        try:
+            entList = get_entity_sentiment(comment)
+            count = 0 
+            for ent in entList:
+                count+=1
+                print('next Dict',count) 
+                del myDict['_id']
+                myDict['entity'] = ent['entity']
+                myDict['salience'] = ent['salience']
+                myDict['score'] = ent['score']
+                myDict['magnitude'] = ent['magnitude']
+                mycoll.insert_one(myDict)
+        except:
+            print('Comment is not in English.')
+        print('next comment',comment_count)
+    # mycoll.delete_one({'_id':mongo_obj_id})
+    print('delete document')
+    mycoll.delete_one({'_id':ObjectId(mongo_obj_id)})
+
