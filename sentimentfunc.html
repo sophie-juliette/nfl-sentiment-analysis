@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sentiment.py-File &#8212; NFL Stimmungsbild</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Literaturverzeichnis" href="Literatur.html" />
+    <link rel="prev" title="Ausblick und Fazit" href="outlook.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">NFL Stimmungsbild</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    Einleitung
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Proof of Concept
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_database.html">
+   Datenbank
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_scrapping.html">
+   Webscrapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_cloud.html">
+   Kommentare &amp; Sentiment
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Cloud
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_introduction.html">
+   Virtuelle Maschine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_limits.html">
+   Adaption PoC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_future.html">
+   Zukünftige Daten
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Daten
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_analysis.html">
+   Aufbereitung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_graphics.html">
+   Analyse
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Abschluss
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="outlook.html">
+   Ausblick und Fazit
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ---------
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   sentiment.py-File
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Literatur.html">
+   Literaturverzeichnis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Figures_Tables.html">
+   Abbildungsverzeichnis
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/sophie-juliette/nfl-sentiment-analysis/master?urlpath=tree/sentimentfunc.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/sophie-juliette/nfl-sentiment-analysis"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/sentimentfunc.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Sentiment.py-File</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sentiment-py-file">
+<h1>Sentiment.py-File<a class="headerlink" href="#sentiment-py-file" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">bson.objectid</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">language_v1</span>
+
+<span class="k">def</span> <span class="nf">get_entity_sentiment</span><span class="p">(</span><span class="n">myText</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">language_v1</span><span class="o">.</span><span class="n">LanguageServiceClient</span><span class="p">()</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">language_v1</span><span class="o">.</span><span class="n">Document</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">myText</span><span class="p">,</span><span class="n">type_</span><span class="o">=</span><span class="n">language_v1</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Document</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">PLAIN_TEXT</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">analyze_entity_sentiment</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;document&#39;</span><span class="p">:</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;encoding_type&#39;</span><span class="p">:</span><span class="n">language_v1</span><span class="o">.</span><span class="n">EncodingType</span><span class="o">.</span><span class="n">UTF8</span><span class="p">})</span>
+    <span class="n">myList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">entities</span><span class="p">:</span>
+        <span class="n">myDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">ent</span><span class="o">.</span><span class="n">sentiment</span> 
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;salience&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="o">.</span><span class="n">salience</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sent</span><span class="o">.</span><span class="n">score</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;magnitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sent</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">myList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">myDict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">myList</span>
+
+<span class="k">def</span> <span class="nf">get_videoID_by_title</span><span class="p">(</span><span class="n">video_title</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes: video_title as string</span>
+<span class="sd">    returns: videoId as string</span>
+<span class="sd">    describtion:</span>
+<span class="sd">        builds a connection to Youtube Data API and executes a search method to list results.</span>
+<span class="sd">        searches for channelId from NFL-Youtube Channel, for videos only</span>
+<span class="sd">        returns videoID for most relevant search result</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">youtube</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;youtube&#39;</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span> 
+                    <span class="n">developerKey</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">youtube</span><span class="o">.</span><span class="n">search</span><span class="p">()</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+        	        <span class="n">part</span><span class="o">=</span><span class="s1">&#39;snippet&#39;</span><span class="p">,</span>
+                	<span class="n">q</span><span class="o">=</span><span class="n">video_title</span><span class="p">,</span>
+                	<span class="n">channelId</span><span class="o">=</span><span class="s1">&#39;UCDVYQ4Zhbm3S2dlz7P1GBDg&#39;</span><span class="p">,</span> <span class="c1"># NFL Channel ID</span>
+                	<span class="nb">type</span><span class="o">=</span><span class="s1">&#39;video&#39;</span><span class="p">,</span>
+                	<span class="n">order</span><span class="o">=</span><span class="s1">&#39;relevance&#39;</span><span class="p">,</span> <span class="c1"># Default Value = relevance</span>
+                	<span class="n">maxResults</span><span class="o">=</span><span class="mi">1</span>
+                	<span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">][</span><span class="s1">&#39;videoId&#39;</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;NoQuota&quot;</span>
+
+<span class="k">def</span> <span class="nf">get_comments</span><span class="p">(</span><span class="n">vidId</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes: youtube video id as string, global api_key as string</span>
+<span class="sd">    returns: list of toplevel-comments under video (no replies)</span>
+<span class="sd">    describtion:</span>
+<span class="sd">        builds a connection to Youtube Data API and executs commentsThreads().list() methods</span>
+<span class="sd">        iterates over response from api request and stores displayed text as string in an list</span>
+<span class="sd">        breaks if no NextPageToken is provided. Thus end of comments is reached.</span>
+<span class="sd">        breaks if counter &lt; threshold-value prevent Youtube out of quota error</span>
+<span class="sd">        returns list with comments</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># list for several pages</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="c1"># get youtube access</span>
+    <span class="n">youtube</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;youtube&#39;</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span> 
+                <span class="n">developerKey</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yt loaded&#39;</span><span class="p">)</span>
+    <span class="c1"># get response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">youtube</span><span class="o">.</span><span class="n">commentThreads</span><span class="p">()</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+	            <span class="n">part</span><span class="o">=</span><span class="s1">&#39;snippet&#39;</span><span class="p">,</span>
+	            <span class="n">videoId</span><span class="o">=</span><span class="n">vidId</span><span class="p">,</span>
+                <span class="n">textFormat</span><span class="o">=</span><span class="s1">&#39;plainText&#39;</span>
+	            <span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]:</span>
+            <span class="c1"># get comment as string, attached to list.</span>
+            <span class="c1"># return item[&#39;snippet&#39;][&#39;topLevelComment&#39;][&#39;snippet&#39;][&#39;textDisplay&#39;]</span>
+            <span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snippet&#39;</span><span class="p">][</span><span class="s1">&#39;topLevelComment&#39;</span><span class="p">][</span><span class="s1">&#39;snippet&#39;</span><span class="p">][</span><span class="s1">&#39;textDisplay&#39;</span><span class="p">])</span>
+        <span class="n">counter</span> <span class="o">-=</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+             <span class="k">break</span>
+        <span class="k">if</span> <span class="s1">&#39;nextPageToken&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">youtube</span><span class="o">.</span><span class="n">commentThreads</span><span class="p">()</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+	                    <span class="n">part</span><span class="o">=</span><span class="s1">&#39;snippet&#39;</span><span class="p">,</span>
+                        <span class="n">pageToken</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;nextPageToken&#39;</span><span class="p">],</span>
+	                    <span class="n">videoId</span><span class="o">=</span><span class="n">vidId</span>
+	                    <span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;comments returned&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">comments</span>
+
+
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;API_Data.json&#39;</span><span class="p">))[</span><span class="s1">&#39;ytDataAPI&#39;</span><span class="p">]</span> <span class="c1"># key for Youtube Data API</span>
+<span class="n">mongodb_pass</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;API_Data.json&#39;</span><span class="p">))[</span><span class="s1">&#39;mongoDB_pass&#39;</span><span class="p">]</span> <span class="c1"># password mongodb user</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;green-reporter-369217-84ed773093b1.json&quot;</span> <span class="c1"># expose google service account for sentiment analysis</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">mongodb_pass</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">gc_nfl</span>
+<span class="n">mycoll</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">gc_games</span>
+<span class="c1"># db = client.nfl_data</span>
+<span class="c1"># mycoll = db.games</span>
+
+<span class="n">myList</span> <span class="o">=</span> <span class="n">mycoll</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s1">&#39;videoID&#39;</span><span class="p">:{</span><span class="s1">&#39;$exists&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">}})[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">myList</span><span class="p">:</span>
+    <span class="n">mongo_obj_id</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="c1"># ObjectID von mongoDB speichern</span>
+    <span class="n">myTitle</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;team1&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">doc</span><span class="p">[</span><span class="s1">&#39;team2&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">doc</span><span class="p">[</span><span class="s1">&#39;week&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39; Highlights | NFL 2021&#39;</span>
+    <span class="n">vid_id</span> <span class="o">=</span> <span class="n">get_videoID_by_title</span><span class="p">(</span><span class="n">myTitle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">vid_id</span> <span class="o">==</span> <span class="s2">&quot;NoQuota&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">vid_id</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">myTitle</span><span class="p">)</span>
+    <span class="n">comment_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">comment</span> <span class="ow">in</span> <span class="n">get_comments</span><span class="p">(</span><span class="n">vid_id</span><span class="p">):</span>
+        <span class="n">comment_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">myDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="c1"># Retrieve old information</span>
+        <span class="n">myDict</span> <span class="o">=</span> <span class="n">doc</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;videoID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vid_id</span>
+
+        <span class="c1"># Add new information / generate one doc per entity</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">entList</span> <span class="o">=</span> <span class="n">get_entity_sentiment</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> 
+            <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">entList</span><span class="p">:</span>
+                <span class="n">count</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;next Dict&#39;</span><span class="p">,</span><span class="n">count</span><span class="p">)</span> 
+                <span class="k">del</span> <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
+                <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span>
+                <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;salience&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="p">[</span><span class="s1">&#39;salience&#39;</span><span class="p">]</span>
+                <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span>
+                <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;magnitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ent</span><span class="p">[</span><span class="s1">&#39;magnitude&#39;</span><span class="p">]</span>
+                <span class="n">mycoll</span><span class="o">.</span><span class="n">insert_one</span><span class="p">(</span><span class="n">myDict</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Comment is not in English.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;next comment&#39;</span><span class="p">,</span><span class="n">comment_count</span><span class="p">)</span>
+    <span class="c1"># mycoll.delete_one({&#39;_id&#39;:mongo_obj_id})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;delete document&#39;</span><span class="p">)</span>
+    <span class="n">mycoll</span><span class="o">.</span><span class="n">delete_one</span><span class="p">({</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">mongo_obj_id</span><span class="p">)})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="outlook.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Ausblick und Fazit</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Literatur.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Literaturverzeichnis</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Markus Armbrecht und Sophie Horn<br/>
+  
+    <div class="extra_footer">
+      <div> Projektarbeit zu Web- & Social Media Analytics<br> im Wintersemester 2022/23<br> <br> <a target="_blank" href="https://icons8.com/icon/xZc9kxSKqmeM/american-football-spieler">American Football-Spieler</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br> <a href="https://github.com/TheArmbreaker" target="_blank"><img src="https://img.shields.io/badge/Github-Markus%20Armbrecht-orange" alt="Github Markus Armbrecht"></a> <a href="https://github.com/sophie-juliette" target="_blank"><img src="https://img.shields.io/badge/Github-Sophie%20Horn-brightgreen" alt="Github Sophie Horn"></a> </div>
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

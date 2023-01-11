@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Webscrapping &#8212; NFL Stimmungsbild</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Kommentare und Sentiment" href="PoC_cloud.html" />
+    <link rel="prev" title="Datenbank" href="PoC_database.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">NFL Stimmungsbild</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Introduction.html">
+                    Einleitung
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Proof of Concept
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_database.html">
+   Datenbank
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Webscrapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PoC_cloud.html">
+   Kommentare &amp; Sentiment
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Cloud
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_introduction.html">
+   Virtuelle Maschine
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_limits.html">
+   Adaption PoC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_future.html">
+   Zukünftige Daten
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Daten
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_analysis.html">
+   Aufbereitung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gc_graphics.html">
+   Analyse
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Abschluss
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="outlook.html">
+   Ausblick und Fazit
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ---------
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="sentimentfunc.html">
+   sentiment.py-File
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Literatur.html">
+   Literaturverzeichnis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Figures_Tables.html">
+   Abbildungsverzeichnis
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/sophie-juliette/nfl-sentiment-analysis/master?urlpath=tree/PoC_scrapping.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/sophie-juliette/nfl-sentiment-analysis"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/PoC_scrapping.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorstellung-des-website">
+   Vorstellung des Website
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorbereitung-scrapping">
+   Vorbereitung Scrapping
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scrapping">
+   Scrapping
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Webscrapping</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorstellung-des-website">
+   Vorstellung des Website
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vorbereitung-scrapping">
+   Vorbereitung Scrapping
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scrapping">
+   Scrapping
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="webscrapping">
+<h1>Webscrapping<a class="headerlink" href="#webscrapping" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="kn">import</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mongodb_pass</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;API_Data.json&#39;</span><span class="p">))[</span><span class="s1">&#39;mongoDB_pass&#39;</span><span class="p">]</span> <span class="c1"># password mongodb user</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">mongodb_pass</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">nfl_data</span>
+<span class="n">mycoll</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">games</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="vorstellung-des-website">
+<h2>Vorstellung des Website<a class="headerlink" href="#vorstellung-des-website" title="Permalink to this headline">#</a></h2>
+<p>Die Basis für die Spieldaten ist die offizielle Webseite der NFL <em><a class="reference external" href="http://www.nfl.com">www.nfl.com</a></em>. Die Webseite  bietet ein Developer Portal mit einer API zum Abruf der Daten. Der Zugriff wird jedoch auf NFL Partner und Kunden beschränkt. <span id="id1">[<a class="reference internal" href="Literatur.html#id2" title="developer.nfl.com. An introduction to the nfl portal. https://developer.nfl.com/get-started/overview. Accessed: 2022-12-12.">developer.nfl.com, n.d.</a>]</span></p>
+<p>Aufgrund des begrenzten Nutzerkreises erfolgt die Datenbeschaffung mit Webscrapping. Dies bedingt die Quelltext-Analyse. Die gescrappten Daten werden in die mongoDB-Datenbank geladen.</p>
+<p>Für das Webscrapping werden verwendet:</p>
+<ul class="simple">
+<li><p>Selenium im Chrome Browser</p></li>
+<li><p>BeautifulSoup</p></li>
+</ul>
+<p>Unter <em><a class="reference external" href="http://www.nfl.com/schedules">www.nfl.com/schedules</a></em> lassen sich die Spielergebnisse der letzten Spielwoche abrufen. Die folgende Abbildung zeigt ein DropDown-Menü über welches Kalenderjahre und zugehörige Wochen abgerufen werden können. .</p>
+<figure class="align-default" id="nfl-schedule">
+<img alt="_images/nfl_schedule.png" src="_images/nfl_schedule.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Screenshot <a class="reference external" href="http://NFL.com">NFL.com</a> - Schedule Dropdown <span id="id2">[<a class="reference internal" href="Literatur.html#id3" title="nfl.com. Nfl schedule 2021 - week 14. https://www.nfl.com/schedules/2021/REG14/. Accessed: 2022-12-12.">nfl.com, n.d.</a>]</span></span><a class="headerlink" href="#nfl-schedule" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Nach einem Klick auf diese Buttons verändert sich die URL nach einem bestimmten Schema. Dieses Verhalten wird genutzt, um die benötigten Links direkt anzusprechen. Für das Kalenderjahr 2021 und Woche 14 haben die Spielergebnisse folgende URL: <em><a class="reference external" href="https://www.nfl.com/schedules/2021/REG14/">https://www.nfl.com/schedules/2021/REG14/</a></em><br />
+Für reguläre Spielwochen besteht der Eintrag immer aus REG + Nummer der Woche. Für andere Events, wie beispielsweise den Superbowl, wird POST zzgl. Nummer verwendet.<br />
+Alternativ stellt die Selenium-Bibliothek Funktionen für Klicks zur Verfügung. Mit <code class="docutils literal notranslate"><span class="pre">find_element()</span></code> und <code class="docutils literal notranslate"><span class="pre">click()</span></code> können das Dropdown-Menü und die Cookie-Abfrage gesteuert werden, um die benötigte Website abzurufen. Jedoch handelt es sich bei den Abruf über das Linkschema, um die zielführende Variante.</p>
+<p>Für das Scrapping wird in Vergangenheits- und Zukunftsdaten unterschieden. Die Vergangenheitsdaten werden mittels der beschriebenen Links abgerufen. Dazu wird nachfolgend eine Textdatei mit den benötigten Links erstellt.
+Das Scrappen der Zukunftsdaten verwendet einen leicht abgewandelten Code und wird im <a class="reference internal" href="gc_future.html#gc-future"><span class="std std-ref">Kapitel zur Cloud</span></a> erläutert.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weeks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2021&quot;</span><span class="p">,</span><span class="s2">&quot;2022&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">19</span><span class="p">):</span>
+    <span class="n">weeks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;REG&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">weeks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="c1">#path = &quot;https://www.nfl.com/schedules/&quot;+ year + &quot;/&quot; + week +&quot;/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">urls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">week</span> <span class="ow">in</span> <span class="n">weeks</span><span class="p">:</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;https://www.nfl.com/schedules/&quot;</span><span class="o">+</span> <span class="n">year</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">week</span> <span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;link_list.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vorbereitung-scrapping">
+<h2>Vorbereitung Scrapping<a class="headerlink" href="#vorbereitung-scrapping" title="Permalink to this headline">#</a></h2>
+<p>Beim Scrapping wird Chrome im Headless-Mode zusammen mit Selenium verwendet. Dazu wird nachfolgend eine Chrome-Instanz konfiguriert und aufgerufen.</p>
+<p>Durch die Funktion <code class="docutils literal notranslate"><span class="pre">execute_script('return</span> <span class="pre">document.body.innerHTML')</span></code> wird der Webseiteninhalt geladen, auch wenn die Anzeige aus durch ein Cookie-Fenster blockiert wird. Dies ermöglicht ein Verzicht auf die oben beschriebene <code class="docutils literal notranslate"><span class="pre">find_element()</span></code> und <code class="docutils literal notranslate"><span class="pre">click()</span></code> Funktionen.<br />
+Im nächsten Schritt wird der Quelltext mit BeautifulSoup und lxml ausgelesen. Die Klasse <code class="docutils literal notranslate"><span class="pre">nfl-c-matchup-strip</span> <span class="pre">nfl-c-matchup-strip--post-game</span></code> beschreibt alle div-Container mit Spieldaten. D.h. pro Eintrag existiert ein div-Container mit dem <code class="docutils literal notranslate"><span class="pre">a-Tag</span></code> (html) = “aria-label”. Diese Tag enthält Informationen über die spielenden Teams. Innerhalb des jeweiligen Containers befinden sich div-Container mit der class <code class="docutils literal notranslate"><span class="pre">nfl-c-matchup-strip__team-score</span></code>, welche die Spielergebnisse enthalten.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#options.add_argument(&quot;--headless&quot;)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--headless&#39;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--no-sandbox&#39;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--disable-dev-shm-usage&#39;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;lang=en&quot;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;start-maximized&quot;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;disable-infobars&quot;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--disable-extensions&quot;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--incognito&quot;</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--disable-blink-features=AutomationControlled&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="s2">&quot;chromedriver&quot;</span><span class="p">,</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+<span class="n">example</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://www.nfl.com/schedules/2021/REG14/&#39;</span><span class="p">)</span>
+<span class="n">example_page</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s1">&#39;return document.body.innerHTML&#39;</span><span class="p">)</span>
+<span class="n">example</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<span class="n">soup_object</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">example_page</span><span class="p">),</span><span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+<span class="n">div_list</span> <span class="o">=</span> <span class="n">soup_object</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip nfl-c-matchup-strip--post-game&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;div class=&quot;nfl-c-matchup-strip nfl-c-matchup-strip--post-game&quot;&gt;&lt;a aria-label=&quot;Vikings vs Steelers game page&quot; class=&quot;nfl-c-matchup-strip__left-area&quot; href=&quot;/games/steelers-at-vikings-2021-reg-14&quot;&gt;&lt;div class=&quot;nfl-c-matchup-strip__game-info&quot;&gt;&lt;p class=&quot;nfl-c-matchup-strip__period&quot;&gt;FINAL&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;nfl-c-matchup-strip__game&quot;&gt;&lt;div class=&quot;nfl-c-matchup-strip__team nfl-c-matchup-strip__team--opponent&quot;&gt;&lt;div class=&quot;nfl-c-matchup-strip__team-score&quot; data-require=&quot;modules/displayScores&quot; data-score=&quot;28&quot;&gt;--&lt;/div&gt;&lt;p class=&quot;nfl-c-matchup-strip__team-name&quot;&gt;&lt;span class=&quot;nfl-c-matchup-strip__team-logo&quot;&gt; &lt;picture&gt;&lt;!--[if IE 9]&gt;&lt;video style=&quot;display:none&quot;&gt;&lt;![endif]--&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/PIT&quot; media=&quot;(min-width:1024px)&quot;&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/PIT&quot; media=&quot;(min-width:768px)&quot;&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/PIT&quot;&gt;&lt;!--[if IE 9]&gt;&lt;/video&gt;&lt;![endif]--&gt;&lt;img alt=&quot;Steelers logo&quot; class=&quot;img-responsive&quot; data-src=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/PIT&quot; role=&quot;presentation&quot; src=&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;/&gt;&lt;/source&gt;&lt;/source&gt;&lt;/source&gt;&lt;/picture&gt; &lt;/span&gt; &lt;span class=&quot;nfl-c-matchup-strip__team-abbreviation&quot;&gt; PIT &lt;/span&gt; &lt;span class=&quot;nfl-c-matchup-strip__team-fullname&quot;&gt; Steelers &lt;/span&gt;&lt;/p&gt;&lt;div class=&quot;nfl-c-matchup-strip__record&quot;&gt;(9-7-1)&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;nfl-c-matchup-strip__team-separator&quot;&gt;&lt;span class=&quot;nfl-o-icon nfl-o-icon--medium&quot;&gt; &lt;svg aria-hidden=&quot;true&quot; class=&quot;nfl-o-icon--nfl-at&quot; viewbox=&quot;0 0 24 24&quot;&gt;&lt;use xlink:href=&quot;#nfl-at&quot;&gt;&lt;/use&gt;&lt;/svg&gt; &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;nfl-c-matchup-strip__team&quot;&gt;&lt;div class=&quot;nfl-c-matchup-strip__team-score&quot; data-require=&quot;modules/displayScores&quot; data-score=&quot;36&quot;&gt;--&lt;/div&gt;&lt;p class=&quot;nfl-c-matchup-strip__team-name&quot;&gt;&lt;span class=&quot;nfl-c-matchup-strip__team-logo&quot;&gt; &lt;picture&gt;&lt;!--[if IE 9]&gt;&lt;video style=&quot;display:none&quot;&gt;&lt;![endif]--&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/MIN&quot; media=&quot;(min-width:1024px)&quot;&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/MIN&quot; media=&quot;(min-width:768px)&quot;&gt;&lt;source data-srcset=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/MIN&quot;&gt;&lt;!--[if IE 9]&gt;&lt;/video&gt;&lt;![endif]--&gt;&lt;img alt=&quot;Vikings logo&quot; class=&quot;img-responsive&quot; data-src=&quot;https://static.www.nfl.com/t_q-best/league/api/clubs/logos/MIN&quot; role=&quot;presentation&quot; src=&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;/&gt;&lt;/source&gt;&lt;/source&gt;&lt;/source&gt;&lt;/picture&gt; &lt;/span&gt; &lt;span class=&quot;nfl-c-matchup-strip__team-abbreviation&quot;&gt; MIN &lt;/span&gt; &lt;span class=&quot;nfl-c-matchup-strip__team-fullname&quot;&gt; Vikings &lt;/span&gt;&lt;/p&gt;&lt;div class=&quot;nfl-c-matchup-strip__record&quot;&gt;(8-9)&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;&lt;div class=&quot;nfl-c-matchup-strip__right-area&quot;&gt;&lt;a aria-label=&quot;Replay&quot; class=&quot;nfl-o-cta nfl-o-cta--link&quot; href=&quot;https://www.nflgamepass.com/en?icampaign=gpd-edi-sht-gampass_replay&quot;&gt; &lt;span class=&quot;nfl-o-icon nfl-o-icon--medium&quot;&gt; &lt;svg aria-hidden=&quot;true&quot; class=&quot;nfl-o-icon--nfl-replay&quot; viewbox=&quot;0 0 24 24&quot;&gt;&lt;use xlink:href=&quot;#nfl-replay&quot;&gt;&lt;/use&gt;&lt;/svg&gt; &lt;/span&gt;   &lt;span&gt;Replay&lt;/span&gt; &lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">()[</span><span class="s1">&#39;aria-label&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score mit Index 0:&#39;</span><span class="p">,</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;data-score&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score mit Index 1:&#39;</span><span class="p">,</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;data-score&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vikings vs Steelers game page
+--------------------
+[&lt;div class=&quot;nfl-c-matchup-strip__team-score&quot; data-require=&quot;modules/displayScores&quot; data-score=&quot;28&quot;&gt;--&lt;/div&gt;, &lt;div class=&quot;nfl-c-matchup-strip__team-score&quot; data-require=&quot;modules/displayScores&quot; data-score=&quot;36&quot;&gt;--&lt;/div&gt;]
+--------------------
+Score mit Index 0: 28
+Score mit Index 1: 36
+</pre></div>
+</div>
+</div>
+</div>
+<p>Der obere Code-Block zeigt den Quelltext-Output für das Spiel <em>Vikings vs Steelers</em>. Nachfolgend ist ein Screenshot der Internetseite.<br />
+Auf der Internetseite werden die Teamnamen im Vergleich zum ‘aria-label’-String verdreht, jedoch die Spielergebnisse in der Anzeigereihenfolge ausgelesen.</p>
+<figure class="align-default" id="nfl-schedule-vikings-steelers">
+<img alt="_images/nfl_schedule_vikingsVSsteelers.png" src="_images/nfl_schedule_vikingsVSsteelers.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Screenshot <a class="reference external" href="http://NFL.com">NFL.com</a> - Vikings vs Steelers <span id="id3">[<a class="reference internal" href="Literatur.html#id3" title="nfl.com. Nfl schedule 2021 - week 14. https://www.nfl.com/schedules/2021/REG14/. Accessed: 2022-12-12.">nfl.com, n.d.</a>]</span></span><a class="headerlink" href="#nfl-schedule-vikings-steelers" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Diese Beobachtung ermöglicht das Speichern der Daten in strukturierter Form. Der String wird nach Leerzeichen gesplittet und der Split-Output mit Index abgerufen. Zum ersten Teamnamen wird der zweite Score-div-Container ausgelesen. Der folgende Codeblock enthält eine beispielhafte Darstellung zum Split der Teamnamen. Ferner wird die Logik gezeigt um Jahr und Woche des Spiels als Information zu ergänzen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Split-Ergebnis:&#39;</span><span class="p">,</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">()[</span><span class="s1">&#39;aria-label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Abruf nach Index:&#39;</span><span class="p">,</span> <span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">()[</span><span class="s1">&#39;aria-label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score mit Index 1:&#39;</span><span class="p">,</span><span class="n">div_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;data-score&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">myURL</span> <span class="o">=</span> <span class="s1">&#39;https://www.nfl.com/schedules/2021/REG14/&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Jahr aus URL:&#39;</span><span class="p">,</span><span class="n">myURL</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Woche aus URL:&#39;</span><span class="p">,</span><span class="s1">&#39;Week &#39;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\d]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">myURL</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Split-Ergebnis: [&#39;Vikings&#39;, &#39;vs&#39;, &#39;Steelers&#39;, &#39;game&#39;, &#39;page&#39;]
+--------------------
+Abruf nach Index: Vikings
+Score mit Index 1: 36
+--------------------
+Jahr aus URL: 2021
+Woche aus URL: Week 14
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="scrapping">
+<h2>Scrapping<a class="headerlink" href="#scrapping" title="Permalink to this headline">#</a></h2>
+<p>Mit den oben beschriebenen Erkenntnissen werden Funktionen gebaut, welche das Scrappen mittels der Links aus einer Textdatei ermöglichen.</p>
+<p>Zunächst wird eine URL aus der Textdatei ausgelesen und daraus gelöscht. Mit der jeweiligen URL wird die Internetseite abgerufen und ein BeautifulSoup-Objekt erzeugt. Auf dieses werden die beschriebenen Scrapping-Schritte durchgeführt.</p>
+<p>Mit der pymongo-Funktion <code class="docutils literal notranslate"><span class="pre">insert_one()</span></code> werden die Daten in der Datenbank gespeichert. Das Scrapping wird nicht gestartet wenn die Datei link_list.txt leer ist. Vor und nach dem Ausführen der Website-Skripte wird 5 Sekunden gewartet um ein vollständiges Laden zu gewährleisten.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_current_week</span><span class="p">(</span><span class="n">should_delete</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes: optional input-parameter if url should be deleted, set to false for bugfixing</span>
+<span class="sd">    returns: string from the file link_list.txt which is a url to nfl.com</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s1">&#39;link_list.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">first_line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#Lesen der ersten Zeile</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#Lesen des gesamten Inhalts</span>
+    <span class="k">if</span> <span class="n">should_delete</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;link_list.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f2</span><span class="p">:</span>
+            <span class="n">f2</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="n">first_line</span>
+</pre></div>
+</div>
+</div>
+</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Der Name der Washington Redskins wurde geändert. Für 2021 wurde deshalb der Name “Football Team” (zwei Wörter) verwendet, weshalb die String-Split-Logik nicht funktioniert. Durch eine Schleife wird der aktuelle Name “Commanders” verwendet, wenn als Teamname “Football” erkannt wird.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_page</span><span class="p">(</span><span class="n">myUrl</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes URL as string</span>
+<span class="sd">    returns b4s-object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="s2">&quot;chromedriver&quot;</span><span class="p">,</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">myUrl</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s1">&#39;return document.body.innerHTML&#39;</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">page</span><span class="p">),</span><span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_teams_scores</span><span class="p">(</span><span class="n">mySoup</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    takes b4s-object output</span>
+<span class="sd">    returns dictionary with teams and scores</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">teams</span> <span class="o">=</span> <span class="n">mySoup</span><span class="o">.</span><span class="n">find</span><span class="p">()[</span><span class="s1">&#39;aria-label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="c1"># check for a game of the washington Football Team</span>
+    <span class="k">if</span> <span class="n">teams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Football&#39;</span><span class="p">:</span>
+        <span class="n">team1</span> <span class="o">=</span> <span class="s1">&#39;Commanders&#39;</span>
+        <span class="n">team2</span> <span class="o">=</span> <span class="n">teams</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">teams</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Football&#39;</span><span class="p">:</span>
+        <span class="n">team1</span> <span class="o">=</span> <span class="n">teams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">team2</span> <span class="o">=</span> <span class="s1">&#39;Commanders&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">team1</span> <span class="o">=</span> <span class="n">teams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">team2</span> <span class="o">=</span> <span class="n">teams</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">mySoup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;data-score&#39;</span><span class="p">]</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">mySoup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip__team-score&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;data-score&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;team1&#39;</span><span class="p">:</span> <span class="n">team1</span><span class="p">,</span> <span class="s1">&#39;score1&#39;</span><span class="p">:</span><span class="n">s1</span><span class="p">,</span> <span class="s1">&#39;team2&#39;</span><span class="p">:</span><span class="n">team2</span><span class="p">,</span> <span class="s1">&#39;score2&#39;</span><span class="p">:</span><span class="n">s2</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Actual Scrapping Run</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="s1">&#39;link_list.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;empty link list&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>   
+    <span class="n">url</span> <span class="o">=</span> <span class="n">get_current_week</span><span class="p">()</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">get_page</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">containers</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;nfl-c-matchup-strip nfl-c-matchup-strip--post-game&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">containers</span><span class="p">:</span>
+        <span class="n">myDict</span> <span class="o">=</span> <span class="n">get_teams_scores</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">myDict</span><span class="p">[</span><span class="s1">&#39;week&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Week &#39;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\d]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">mycoll</span><span class="o">.</span><span class="n">insert_one</span><span class="p">(</span><span class="n">myDict</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;succesful scrapping run&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="PoC_database.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Datenbank</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="PoC_cloud.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Kommentare und Sentiment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Markus Armbrecht und Sophie Horn<br/>
+  
+    <div class="extra_footer">
+      <div> Projektarbeit zu Web- & Social Media Analytics<br> im Wintersemester 2022/23<br> <br> <a target="_blank" href="https://icons8.com/icon/xZc9kxSKqmeM/american-football-spieler">American Football-Spieler</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br> <a href="https://github.com/TheArmbreaker" target="_blank"><img src="https://img.shields.io/badge/Github-Markus%20Armbrecht-orange" alt="Github Markus Armbrecht"></a> <a href="https://github.com/sophie-juliette" target="_blank"><img src="https://img.shields.io/badge/Github-Sophie%20Horn-brightgreen" alt="Github Sophie Horn"></a> </div>
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
